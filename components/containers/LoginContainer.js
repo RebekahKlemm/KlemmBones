@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import Login from '../Login';
-import {updateCurrentUser, setSession} from '../../actions/users'
-import {changeView} from '../../actions/view';
+import {setSession} from '../../actions/users'
 
 class LoginContainer extends Component{
     constructor(props){
@@ -25,7 +24,6 @@ class LoginContainer extends Component{
     }
 
     loginUser(e){
-        // console.log("got to loginUser function in LoginContainer, this.props", this.props)
         e.preventDefault();
         const loginAttempt = {
             phone: e.target.phone.value,
@@ -42,8 +40,8 @@ class LoginContainer extends Component{
                     password: '',
                     user:user
                 });
-
-               window.setTimeout(() => this.props.router.push(user.role + '/'+loginAttempt.phone), 1000);
+                //send user to next page, possibly with a delay if things don't load properly
+               // window.setTimeout(() => this.props.router.push(user.role + '/'+loginAttempt.phone), 1000);
 
             }
         });
@@ -52,10 +50,7 @@ class LoginContainer extends Component{
 }
 
 const mapStateToProps = (state, ownProps) => {
-    // console.log("mstp state", state)
     return {
-        currentView: state.currentView,
-        currentUser: state.users.currentUser,
         allUsers: state.users.allUsers
     };
 }
@@ -64,12 +59,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        updateCurrentUser: function(user){
-            dispatch(updateCurrentUser(user));
-        },
-        changeView: function(view){
-            dispatch(changeView(view));
-        },
         setSession: function(user){
             dispatch(setSession(user));
         }
